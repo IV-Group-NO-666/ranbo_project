@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
 from ranbo.models import User, Post, Like
 from ranbo.models import UserProfile
 

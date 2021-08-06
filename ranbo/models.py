@@ -1,5 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import User
+
+
+class User(models.Model):
+    user_id = models.IntegerField(default=0, unique=True)
+    username = models.CharField(max_length=128, unique=True)
+    password = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.user_id
 
 
 # Authentication
@@ -12,21 +20,12 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-class User(models.Model):
-    user_id = models.IntegerField(default=0, unique=True)
-    username = models.CharField(max_length=128, unique=True)
-    password = models.CharField(max_length=128)
-
-    def __str__(self):
-        return self.user_id
-
-
 class Post(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_id = models.IntegerField(default=0, unique=True)
     view_times = models.IntegerField(default=0)
     like_times = models.IntegerField(default=0)
-    content = models.TextField()
+    content = models.CharField(max_length=200)
     picture = models.ImageField(upload_to='profile_images', blank=True)
 
     def __str__(self):
