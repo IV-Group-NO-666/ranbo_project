@@ -1,0 +1,27 @@
+{% extends 'ranbo/base.html' %}
+
+{% load staticfiles %}
+
+{% block title_block %}
+    Post new thoughts
+{% endblock %}
+
+{% block body_block %}
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+    <form>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Write down a new post</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Upload a picture</label>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<div class="col-md-2">
+</div>
+{% endblock %}

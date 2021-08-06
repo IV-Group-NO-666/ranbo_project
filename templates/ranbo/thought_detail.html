@@ -1,0 +1,49 @@
+{% extends 'ranbo/base.html' %}
+
+{% load staticfiles %}
+
+{% block title_block %}
+    Thought detail
+{% endblock %}
+
+{% block body_block %}
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+    <div class="media my-1">
+        <img class="mr-3" alt="Bootstrap Media Preview" src="https://www.layoutit.com/img/sports-q-c-64-64-8.jpg" />
+        <div class="media-body">
+            <h5 class="mt-0">
+                Nested media heading
+            </h5> This is the twitter content.
+        </div>
+    </div>
+    <div class="row my-1">
+        <div class="col-md-4">
+            <img src="{% static "images/comments.svg" %}"> (2)
+        </div>
+        <div class="col-md-4">
+            <img src="{% static "images/likes.svg" %}"> (3)
+        </div>
+        <div class="col-md-4">
+            <img src="{% static "images/views.svg" %}"> (9)
+        </div>
+    </div>
+    <form>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button type="submit"  class="btn btn-primary">
+                    Leave a comment
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="col-md-2">
+</div>
+{% endblock %}

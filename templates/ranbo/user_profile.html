@@ -3,10 +3,35 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Homepage
+    User Profile
 {% endblock %}
 
 {% block body_block %}
+<div class="col-md-3">
+    <div class="row my-3">
+        <div class="col-md-4">
+            <img alt="Bootstrap Image Preview" src="{% static "images/default-avatar.svg" %}" />
+        </div>
+        <div class="col-md-8">
+        </div>
+    </div>
+<!--    <img alt="Bootstrap Image Preview" src="{% static "images/default-avatar.svg" %}" />-->
+    <h4>
+        Username
+    </h4>
+    <p>
+        Total thoughts
+    </p>
+    <p>
+        Total comments
+    </p>
+    <p>
+        Total likes
+    </p>
+    <p>
+        Total views
+    </p>
+</div>
 <div class="col-md-9">
     <div class="row my-2">
         <div class="col-md-12">
@@ -31,30 +56,5 @@
             </div>
         </div>
     </div>
-</div>
-<div class="col-md-3">
-    <button type="button" class="btn btn-block btn-outline-secondary">
-        Sort by time
-    </button>
-    <button type="button" class="btn btn-block btn-outline-secondary">
-        Sort by likes
-    </button>
-    <button type="button" class="btn btn-block btn-outline-secondary">
-        Sort by views
-    </button>
-    <button type="button" class="btn btn-block btn-outline-secondary">
-        Sort by popularity
-    </button>
-    <hr />
-    {% if user.is_authenticated %}
-        <label>Last login time: </label>
-        <button type="button" class="btn btn-block btn-outline-info">
-           Post new thoughts
-        </button>
-    {% else %}
-        <a href="">
-            <label>Login to read more thoughts</label>
-        </a>
-    {% endif %}
 </div>
 {% endblock %}
