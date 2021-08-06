@@ -5,7 +5,6 @@ from ranbo.models import UserProfile
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
-    user_id = forms.IntegerField(widget=forms.HiddenInput())
     username = forms.CharField(max_length=128)
     email = forms.EmailField()
 
@@ -21,7 +20,6 @@ class UserProfileForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-    post_id = forms.IntegerField()
     view_times = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     like_times = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     content = forms.TextInput()
@@ -29,7 +27,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('post_id', 'content', 'picture',)
+        fields = ('user', 'content', 'picture',)
 
 
 class LikeForm(forms.ModelForm):

@@ -4,7 +4,7 @@ from ranbo.models import User, Post, Like
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('post_id', 'content', 'view_times', 'like_times')
+    list_display = ('user', 'content', 'view_times', 'like_times')
 
 
 admin.site.register(User)
