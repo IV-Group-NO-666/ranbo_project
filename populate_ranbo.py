@@ -47,7 +47,7 @@ def populate():
 def add_post(user_id, post_id, view_times=0, like_times=0, content=any):
     p = Post.objects.get_or_create(user_id=user_id, post_id=post_id, content=content)[0]
     p.view_times = view_times
-    p.Like_tiles = like_times
+    p.like_times = like_times
     p.save()
     return p
 

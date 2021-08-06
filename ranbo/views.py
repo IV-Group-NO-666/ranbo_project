@@ -27,12 +27,12 @@ def sort_thought(request):
 
 def user_login(request):
     if request.method == "POST":
-        username = request.POST.get('Username')
+        username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            return redirect(reverse('rango:index'))
+            return redirect(reverse('ranbo:index'))
         else:
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
@@ -150,4 +150,4 @@ def user_edit(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect(reverse('rango:index'))
+    return redirect(reverse('ranbo:index'))

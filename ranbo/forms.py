@@ -7,10 +7,11 @@ class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     user_id = forms.IntegerField(widget=forms.HiddenInput())
     username = forms.CharField(max_length=128)
+    email = forms.EmailField()
 
     class Meta:
         model = User
-        fields = ('username', 'password',)
+        fields = ('username', 'email', 'password',)
 
 
 class UserProfileForm(forms.ModelForm):
