@@ -11,7 +11,6 @@ from ranbo.forms import *
 def index(request):
     thoughts = Post.objects.order_by('-like_times')[:5]
     context_dict = {'thoughts': thoughts}
-    print(thoughts)
     return render(request, 'ranbo/index.html', context=context_dict)
 
 
@@ -45,9 +44,10 @@ def add_thought(request):
     form = PostForm()
     if request.method == 'POST':
         form = PostForm(request.POST)
-        if form.is_vaild():
-            form.user = request.user
-            form.save(commit=True)
+        if form.is_valid():
+            thought = form.save(commit=False)
+            thought.user = request.user
+            thought.save()
             return redirect('/ranbo/')
         else:
             print(form.errors)

@@ -18,14 +18,14 @@ class UserProfileForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-    view_times = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    like_times = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    content = forms.TextInput()
-    picture = forms.ImageField(help_text="Please enter the picture.")
+    content = forms.CharField(max_length=200)
+    # picture = forms.ImageField(widget=forms.HiddenInput(), help_text="Please enter the picture.")
+    # view_times = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    # like_times = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
     class Meta:
         model = Post
-        fields = ('content', 'picture',)
+        fields = ('content',)
 
 
 class LikeForm(forms.ModelForm):

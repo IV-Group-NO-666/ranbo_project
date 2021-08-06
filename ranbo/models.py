@@ -17,10 +17,10 @@ class Post(models.Model):
     view_times = models.IntegerField(default=0)
     like_times = models.IntegerField(default=0)
     content = models.CharField(max_length=200)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    # picture = models.ImageField(upload_to='profile_images', blank=True)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.id)
 
 
 class Like(models.Model):
