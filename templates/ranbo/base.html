@@ -24,29 +24,35 @@
     <div class="container-fluid">
 	<div class="row bg-aero">
 		<div class="col-md-12">
-			<div class="row my-5">
+			<div class="row my-3">
 				<div class="col-md-3">
 					<img src="{% static "images/logo.svg" %}">
 				</div>
 				<div class="col-md-6">
+					<br /><br />
 					<h1 class="text-center">
 						Ranbo - Find new thoughts
 					</h1>
 				</div>
 				<div class="col-md-3">
 					{% if user.is_authenticated %}
+						<br /><br />
 						<div class="row">
 							<div class="col-md-4">
-								<img alt="Bootstrap Image Preview" src="{% static "images/default-avatar.svg" %}" class="rounded-circle">
+								<h6>Logged in</h6>
 							</div>
-							<div class="col-md-8">
-								{{ user.username }}
+							<div class="col-md-4">
+								<a href="{% url 'ranbo:user_profile' user_id=user.id %}">
+									<h6>{{ user.username }}</h6>
+								</a>
 							</div>
-							<a href="{% url 'ranbo:logout' %}">
-								<button type="button" class="btn btn-secondary btn-block" >
-									Logout
-								</button>
-							</a>
+							<div class="col-md-4">
+								<a href="{% url 'ranbo:logout' %}">
+									<button class="btn btn-outline-primary btn-block">
+										Logout
+									</button>
+								</a>
+							</div>
 						</div>
 					{% else %}
 						{% if disable_login_card %}
@@ -54,27 +60,37 @@
 							<form role="form" method="post" action="{% url 'ranbo:login' %}" id="login_form">
 								{% csrf_token %}
 								<div class="form-group">
-									<label for="exampleInputEmail1">
-										Username
-									</label>
-									<input type="text" class="form-control" id="exampleInputEmail1" name="username" />
+									<div class="row">
+										<div class="col-md-3">
+											<label for="exampleInputEmail1">Username</label>
+										</div>
+										<div class="col-md-9">
+											<input type="text" class="form-control" id="exampleInputEmail1" name="username" />
+										</div>
+									</div>
 								</div>
 								<div class="form-group">
-									<label for="exampleInputPassword1">
-										Password
-									</label>
-									<input type="password" class="form-control" id="exampleInputPassword1" name="password" />
+									<div class="row">
+										<div class="col-md-3">
+											<label for="exampleInputPassword1">Password</label>
+										</div>
+										<div class="col-md-9">
+											<input type="password" class="form-control" id="exampleInputPassword1" name="password" />
+										</div>
+									</div>
 								</div>
 							</form>
 							<div class="row">
-								<div class="col-md-6">
-									<button type="submit" class="btn btn-primary" form="login_form">
+								<div class="col-md-7">
+									<button type="submit" class="btn btn-primary btn-block" form="login_form">
 										Sign in
 									</button>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-4">
 									<a href="{% url 'ranbo:register' %}">
-										<button class="btn btn-primary">
+										<button class="btn btn-secondary btn-block">
 											Sign up
 										</button>
 									</a>
@@ -83,6 +99,30 @@
 						{% endif %}
 					{% endif %}
 				</div>
+			</div>
+		</div>
+		<div class="row my-1">
+			<div class="col-md-12">
+				<ul class="nav">
+					<li class="nav-item">
+						<strong><a class="nav-link" href="{% url 'ranbo:index' %}">Homepage</a></strong>
+					</li>
+					{% if user.is_authenticated %}
+						<li class="nav-item">
+							<strong><a class="nav-link" href="{% url 'ranbo:user_profile' user_id=user.id %}">My Profile</a></strong>
+						</li>
+						<li class="nav-item">
+							<strong><a class="nav-link" href="{% url 'ranbo:add_thought' %}">Post new thought</a></strong>
+						</li>
+					{% else %}
+					<li class="nav-item">
+						<strong><a class="nav-link" href="{% url 'ranbo:login' %}">Sign in</a></strong>
+					</li>
+					<li class="nav-item">
+						<strong><a class="nav-link" href="{% url 'ranbo:register' %}">Sign up</a></strong>
+					</li>
+					{% endif%}
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -99,7 +139,7 @@
 			<div class="row my-5">
 				<div class="col-md-12">
 					<h6 class="text-center">
-						Copyright @ IV Group No 666
+						Copyright (c) 2021 IV-Group-NO-666
 					</h6>
 				</div>
 			</div>

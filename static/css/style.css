@@ -5,3 +5,13 @@
 .bg-cadet-blue {
   background-color: #a9b2c3;
 }
+
+.bg-black-shadows {
+  background-color: #bfafb2;
+}
+
+.color-transparent {
+  background-color: transparent;
+  color: transparent;
+  filter: alpha(opacity=100,finishopacity=100,style=1)
+}
