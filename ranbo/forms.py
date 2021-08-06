@@ -22,14 +22,14 @@ class PostForm(forms.ModelForm):
     Post_id = forms.IntegerField()
     View_times = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     Like_times =forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    Content = forms.TextField(help_text="Please enter the content.")
-    Picture = forms.ImageField(blank=True,help_text="Please enter the picture.")
+    Content = forms.TextInput()
+    Picture = forms.ImageField(help_text="Please enter the picture.")
     class Meta:
         model = Post
         fields = ('Post_id','Content', 'Picture',)
 
 class likeForm(forms.ModelForm):
-    like_id = forms.IntegerField(default=0,unique=True)
+    like_id = forms.IntegerField()
     class Meta:
         model = like
-        fields = ('like_id')
+        fields = ('like_id',)
