@@ -7,7 +7,7 @@ class User(models.Model):
     password = models.CharField(max_length=128)
 
     def __str__(self):
-        return self.user_id
+        return str(self.user_id)
 
 
 # Authentication
@@ -29,7 +29,7 @@ class Post(models.Model):
     picture = models.ImageField(upload_to='profile_images', blank=True)
 
     def __str__(self):
-        return self.post_id
+        return str(self.post_id)
 
 
 class Like(models.Model):
@@ -38,4 +38,4 @@ class Like(models.Model):
     like_id = models.IntegerField(default=0, unique=True)
 
     def __str__(self):
-        return self.user_id
+        return str(self.user_id)

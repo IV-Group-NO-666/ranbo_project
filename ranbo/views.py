@@ -9,8 +9,9 @@ from ranbo.forms import *
 
 
 def index(request):
-    thoughts = Post.objects.order_by('like_times')[:5]
+    thoughts = Post.objects.order_by('-like_times')[:5]
     context_dict = {'thoughts': thoughts}
+    print(thoughts)
     return render(request, 'ranbo/index.html', context=context_dict)
 
 
