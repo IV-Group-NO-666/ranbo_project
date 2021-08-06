@@ -20,7 +20,7 @@ from ranbo import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-### authentation 
+# authentication
 urlpatterns = [
     path('', views.index, name='index'),
     path('ranbo/', include('ranbo.urls')),

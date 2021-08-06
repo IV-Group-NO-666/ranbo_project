@@ -9,18 +9,18 @@ from ranbo.forms import *
 
 
 def index(request):
-    thought = Post.objects.order_by('Like_times')[:5]
-    # context['thought']=thought
-    return render(request, 'ranbo/index.html', context=thought)
+    thoughts = Post.objects.order_by('like_times')[:5]
+    context_dict = {'thoughts': thoughts}
+    return render(request, 'ranbo/index.html', context=context_dict)
 
 
 def sort_thought(request):
-    thought=Post.objects.order_by('Post_id')[:5]
+    thought = Post.objects.order_by('post_id')[:5]
     if request.method == "POST":
         if 'like' in request.POST:
-            thought = Post.objects.order_by('Like_times')[:5]
+            thought = Post.objects.order_by('like_times')[:5]
         if 'view' in request.POST:
-            thought = Post.objects.order_by('View_times')[:5]
+            thought = Post.objects.order_by('view_times')[:5]
     return render(request, 'ranbo/index.html', context=thought)
 
 
@@ -52,22 +52,6 @@ def add_thought(request):
     return render(request, 'ranbo/add_post.html', {'form': form})
 
 
-# def register(request):
-#     if request.method == 'POST':
-#         user_form = UserForm(request.POST)
-#         if user_form.is_valid():
-#             user = user_form.save()
-#             user.set_password(user.password)
-#             user.save()
-#             registered = True
-#         else:
-#             print(user_form.errors, profile_form.errors)
-#     else:
-#         user_form = UserForm()
-#     return render(request, 'ranbo/register.html',
-#                   context={'user_form': user_form, 'registered': registered})
-
-
 def register(request):
     registered = False
     if request.method == 'POST':
@@ -93,7 +77,8 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'ranbo/register.html', context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'ranbo/register.html',
+                  context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
 
 def show_more(request):
@@ -117,7 +102,7 @@ def show_more(request):
 
 def thought_detail(request, post_id):
     context_dict = {}
-    thought = Post.objects.get(Post_id=post_id)
+    thought = Post.objects.get(post_id=post_id)
     context_dict['like'] = thought.like_times
     context_dict['view'] = thought.view_times
     context_dict['comment'] = thought.comment
@@ -138,13 +123,13 @@ def user_info(request, user_id):
 
 @login_required
 def like_thought(request):
-    if(request.method == 'GET'):
+    if request.method == 'GET':
         thought_id = request.GET['post_id']
         likes = 0
         if thought_id:
-            thought = Post.objects.get(Post_id=int(thought_id))
+            thought = Post.objects.get(post_id=int(thought_id))
             if thought:
-                likes = thought.like_times+1
+                likes = thought.like_times + 1
                 thought.like_times = likes
                 thought.save()
         return HttpResponse(likes)
