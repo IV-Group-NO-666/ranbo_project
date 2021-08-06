@@ -1,13 +1,13 @@
 from django import forms
 from django.contrib.auth.models import User
-from ranbo.models import User, Post, like
+from ranbo.models import User, Post, Like
 from ranbo.models import UserProfile
 
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
-    User_id = forms.IntegerField(widget=forms.HiddenInput())
-    Username = forms.CharField(max_length=128)
+    user_id = forms.IntegerField(widget=forms.HiddenInput())
+    username = forms.CharField(max_length=128)
 
     class Meta:
         model = User
@@ -21,11 +21,11 @@ class UserProfileForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-    Post_id = forms.IntegerField()
-    View_times = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    Like_times = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    Content = forms.TextInput()
-    Picture = forms.ImageField(help_text="Please enter the picture.")
+    post_id = forms.IntegerField()
+    view_times = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    like_times = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    content = forms.TextInput()
+    picture = forms.ImageField(help_text="Please enter the picture.")
 
     class Meta:
         model = Post
@@ -36,5 +36,5 @@ class LikeForm(forms.ModelForm):
     like_id = forms.IntegerField()
 
     class Meta:
-        model = like
+        model = Like
         fields = ('like_id',)

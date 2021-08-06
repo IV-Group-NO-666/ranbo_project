@@ -3,7 +3,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ranbo_project.settings')
 
 import django
 django.setup()
-from ranbo.models import User, Post, like
+from ranbo.models import User, Post, Like
 
 def populate():
     user1_post = [
@@ -43,7 +43,7 @@ def populate():
 
 def add_post(User_id,Post_id,View_times=0,Like_times=0,Content=any):
     p = Post.objects.get_or_create(User_id=User_id, Post_id=Post_id,Content=Content)[0]
-    p.View_times=View_times
+    p.view_times=View_times
     p.Like_tiles=Like_times
     p.save()
     return p
