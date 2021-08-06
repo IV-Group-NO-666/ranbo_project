@@ -1,12 +1,10 @@
 from django import forms
-from ranbo.models import User, Post, Like
-from ranbo.models import UserProfile
+from django.contrib.auth.models import User
+from ranbo.models import UserProfile, Post, Like
 
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
-    username = forms.CharField(max_length=128)
-    email = forms.EmailField()
 
     class Meta:
         model = User
@@ -27,7 +25,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('user', 'content', 'picture',)
+        fields = ('content', 'picture',)
 
 
 class LikeForm(forms.ModelForm):

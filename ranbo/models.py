@@ -1,13 +1,5 @@
 from django.db import models
-
-
-class User(models.Model):
-    username = models.CharField(max_length=128, unique=True)
-    password = models.CharField(max_length=128)
-    email = models.EmailField()
-
-    def __str__(self):
-        return str(self.username)
+from django.contrib.auth.models import User
 
 
 # Authentication

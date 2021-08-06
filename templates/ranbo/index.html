@@ -16,7 +16,7 @@
                         <img class="mr-3" alt="Bootstrap Media Preview" src="https://www.layoutit.com/img/sports-q-c-64-64-8.jpg" />
                         <div class="media-body">
                             <h5 class="mt-0">
-                                {{ thought.user_id }}
+                                {{ thought.user.username }}
                             </h5> {{ thought.content }}
                         </div>
                     </div>
@@ -55,11 +55,13 @@
     <hr />
     {% if user.is_authenticated %}
         <label>Last login time: </label>
-        <button type="button" class="btn btn-block btn-outline-info">
-           Post new thoughts
-        </button>
+        <a href="{% url 'ranbo:add_thought' %}">
+            <button type="button" class="btn btn-block btn-outline-info">
+               Post new thought
+            </button>
+        </a>
     {% else %}
-        <a href="">
+        <a href="{% url 'ranbo:login' %}">
             <label>Login to read more thoughts</label>
         </a>
     {% endif %}

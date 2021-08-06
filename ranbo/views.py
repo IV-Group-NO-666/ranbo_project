@@ -46,11 +46,12 @@ def add_thought(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_vaild():
+            form.user = request.user
             form.save(commit=True)
             return redirect('/ranbo/')
         else:
             print(form.errors)
-    return render(request, 'ranbo/add_post.html', {'form': form})
+    return render(request, 'ranbo/add_thought.html', {'form': form})
 
 
 def register(request):
@@ -70,7 +71,7 @@ def register(request):
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
             profile.save()
-            registered = True
+            return render(request, 'ranbo/login.html')
 
         else:
             print(user_form.errors, profile_form.errors)
@@ -78,8 +79,10 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'ranbo/register.html',
-                  context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'ranbo/register.html', context={
+        'user_form': user_form,
+        'profile_form': profile_form,
+    })
 
 
 def show_more(request):

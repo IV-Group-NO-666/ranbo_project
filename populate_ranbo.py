@@ -11,35 +11,35 @@ from ranbo.models import User, Post, Like
 def populate():
     user1_post = [
         {
-         'view_times': 35,
-         'like_times': 24,
-         'content': "China's 34th gold! China women's table tennis team defeated Japan 3-0 in the Olympic women's team final",
-         }
+            'view_times': 35,
+            'like_times': 24,
+            'content': "China's 34th gold! China women's table tennis team defeated Japan 3-0 in the Olympic women's team final",
+        }
     ]
 
     user2_post = [
         {
-         'view_times': 266,
-         'like_times': 36,
-         'content': "Today, the Tokyo Olympic Diving women's 10m platform singles final, Tokyo Olympic Team has nine gold and silver sweep! Quan Hongchan gold, Chen Yuxi silver!",
-         },
-         {'view_times':654,
-          'like_times':459,
-          'content':"lkasfd laksd naksldn  aoi nak n lak na lk"},
-          {'view_times':789,
-          'like_times':62,
-          'content':"adsajs o iaja oij aok aoksnd saoid j"}
+            'view_times': 266,
+            'like_times': 36,
+            'content': "Today, the Tokyo Olympic Diving women's 10m platform singles final, Tokyo Olympic Team has nine gold and silver sweep! Quan Hongchan gold, Chen Yuxi silver!",
+        },
+        {'view_times': 654,
+         'like_times': 459,
+         'content': "lkasfd laksd naksldn  aoi nak n lak na lk"},
+        {'view_times': 789,
+         'like_times': 62,
+         'content': "adsajs o iaja oij aok aoksnd saoid j"}
     ]
 
     user3_post = [
         {
-         'view_times': 489,
-         'like_times': 152,
-         'content': "It's a beautiful day!",
-         },
-         {'view_times':94,
-          'like_times':6,
-          'content':"asjd ias dbiasj bdiasj dbqwkej bwqk e"}
+            'view_times': 489,
+            'like_times': 152,
+            'content': "It's a beautiful day!",
+        },
+        {'view_times': 94,
+         'like_times': 6,
+         'content': "asjd ias dbiasj bdiasj dbqwkej bwqk e"}
     ]
 
     user = {'memeda': {'post': user1_post},
@@ -54,7 +54,7 @@ def populate():
 
 
 def add_post(user, view_times=0, like_times=0, content=any):
-    p = Post.objects.get_or_create(user=user,  content=content)[0]
+    p = Post.objects.get_or_create(user=user, content=content)[0]
     p.view_times = view_times
     p.like_times = like_times
     p.save()
@@ -62,7 +62,7 @@ def add_post(user, view_times=0, like_times=0, content=any):
 
 
 def add_user(username):
-    u = User.objects.get_or_create( username=username)[0]
+    u = User.objects.get_or_create(username=username)[0]
     u.save()
     return u
 
