@@ -1,0 +1,13 @@
+<ul>
+    {% if user.is_authenticated %}
+    <li><a href="{% url 'ranbo:restricted' %}">Restricted Page</a></li>
+    <li><a href="{% url 'ranbo:logout' %}">Logout</a></li>
+   
+{% else %}
+    <li><a href="{% url 'ranbo:register' %}">Sign Up</a></li>
+    <li><a href="{% url 'ranbo:login' %}">Login</a></li>
+{% endif %}
+   
+    <li><a href="{% url 'ranbo:index' %}">Index</a></li>
+    
+</ul>
