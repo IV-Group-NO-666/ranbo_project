@@ -3,9 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.db.models.aggregates import Count, Sum
-from ranbo.models import *
 from ranbo.forms import *
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def index(request):
@@ -15,7 +14,7 @@ def index(request):
 
 
 def sort_thought(request):
-    thought = Post.objects.order_by('post_id')[:5]
+    thought = Post.objects.order_by('-post_id')[:5]
     if request.method == "POST":
         if 'like' in request.POST:
             thought = Post.objects.order_by('like_times')[:5]
@@ -36,7 +35,7 @@ def user_login(request):
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, 'ranbo/login.html')
+        return render(request, 'ranbo/login.html', context={'disable_login_card': True})
 
 
 @login_required
@@ -71,7 +70,7 @@ def register(request):
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
             profile.save()
-            return render(request, 'ranbo/login.html')
+            return render(request, 'ranbo/index.html')
 
         else:
             print(user_form.errors, profile_form.errors)
@@ -82,6 +81,7 @@ def register(request):
     return render(request, 'ranbo/register.html', context={
         'user_form': user_form,
         'profile_form': profile_form,
+        'disable_login_card': True,
     })
 
 
@@ -113,16 +113,27 @@ def thought_detail(request, post_id):
     return render(request, 'ranbo/thought_detail.html')
 
 
-def user_info(request, user_id):
-    context_dict = {}
-    thought = Post.objects.get(user_id=user_id)
-    total_like = thought.aggregate(Sum('like_times'))
-    total_view = thought.aggregate(Sum('view_times'))
-    user = User.object.get(User_id=user_id)
-    context_dict['username'] = user.usename
-    context_dict['total_like'] = total_like
-    context_dict['total_view'] = total_view
-    return render(request, 'ranbo/user_profile.html')
+def user_profile(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+    except ObjectDoesNotExist:
+        return render(request, 'ranbo/user_profile.html')
+    thoughts = Post.objects.filter(user=user)
+    total_thoughts = 0
+    total_likes = 0
+    total_views = 0
+    for t in thoughts:
+        total_thoughts += 1
+        total_likes += t.like_times
+        total_views += t.view_times
+    context_dict = {
+        'username': user.username,
+        'total_thoughts': total_thoughts,
+        'total_likes': total_likes,
+        'total_views': total_views,
+        'thoughts': thoughts,
+    }
+    return render(request, 'ranbo/user_profile.html', context=context_dict)
 
 
 @login_required

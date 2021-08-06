@@ -7,54 +7,69 @@
 {% endblock %}
 
 {% block body_block %}
-<div class="col-md-3">
-    <div class="row my-3">
-        <div class="col-md-4">
-            <img alt="Bootstrap Image Preview" src="{% static "images/default-avatar.svg" %}" />
-        </div>
-        <div class="col-md-8">
-        </div>
-    </div>
-<!--    <img alt="Bootstrap Image Preview" src="{% static "images/default-avatar.svg" %}" />-->
-    <h4>
-        Username
-    </h4>
-    <p>
-        Total thoughts
-    </p>
-    <p>
-        Total comments
-    </p>
-    <p>
-        Total likes
-    </p>
-    <p>
-        Total views
-    </p>
-</div>
-<div class="col-md-9">
-    <div class="row my-2">
-        <div class="col-md-12">
-            <div class="media my-1">
-                <img class="mr-3" alt="Bootstrap Media Preview" src="https://www.layoutit.com/img/sports-q-c-64-64-8.jpg" />
-                <div class="media-body">
-                    <h5 class="mt-0">
-                        Nested media heading
-                    </h5> This is the twitter content.
-                </div>
+{% if username %}
+    <div class="col-md-3">
+        <div class="row my-3">
+            <div class="col-md-4">
+                <img alt="Bootstrap Image Preview" src="{% static "images/default-avatar.svg" %}" />
             </div>
-            <div class="row my-1">
-                <div class="col-md-4">
-                    <img src="{% static "images/comments.svg" %}"> (2)
-                </div>
-                <div class="col-md-4">
-                    <img src="{% static "images/likes.svg" %}"> (3)
-                </div>
-                <div class="col-md-4">
-                    <img src="{% static "images/views.svg" %}"> (9)
-                </div>
+            <div class="col-md-8">
             </div>
         </div>
+        <h4>
+            {{ username }}
+        </h4>
+        <p>
+            Total thoughts: {{ total_thoughts }}
+        </p>
+        <p>
+            Total likes: {{ total_likes }}
+        </p>
+        <p>
+            Total views: {{ total_views }}
+        </p>
     </div>
-</div>
+    <div class="col-md-9">
+        {% if thoughts %}
+            {% for thought in thoughts %}
+                <div class="row my-2">
+                    <div class="col-md-12">
+                        <div class="media my-1">
+                            <img class="mr-3" alt="Bootstrap Media Preview" src="https://www.layoutit.com/img/sports-q-c-64-64-8.jpg" />
+                            <div class="media-body">
+                                <a href="{% url 'ranbo:user_profile' user_id=thought.user.id %}">
+                                    <h5 class="mt-0">
+                                        {{ thought.user.username }}
+                                    </h5>
+                                </a>
+                                {{ thought.content }}
+                            </div>
+                        </div>
+                        <div class="row my-1">
+                            <div class="col-md-4">
+                                <img src="{% static "images/comments.svg" %}"> (0)
+                            </div>
+                            <div class="col-md-4">
+                                <img src="{% static "images/likes.svg" %}"> ({{ thought.like_times }})
+                            </div>
+                            <div class="col-md-4">
+                                <img src="{% static "images/views.svg" %}"> ({{ thought.view_times }})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <li><strong>There are no thoughts present.</strong></li>
+        {%endif%}
+    </div>
+{% else %}
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        <h3 class="text-center" >User not found! :(</h3>
+    </div>
+    <div class="col-md-4">
+    </div>
+{% endif %}
 {% endblock %}
