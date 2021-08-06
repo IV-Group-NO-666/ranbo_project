@@ -4,32 +4,29 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models.aggregates import Count, Sum
-from ranbo import models
-from ranbo.forms import UserForm, UserProfileForm
+from ranbo.models import *
+from ranbo.forms import *
 
 
 def index(request):
-    thought = Thought.objects.order_by('like_times')[:5]
+    thought = Post.objects.order_by('Like_times')[:5]
     # context['thought']=thought
-    return render(request, 'index.html', context=thought)
+    return render(request, 'ranbo/index.html', context=thought)
 
 
 def sort_thought(request):
+    thought=Post.objects.order_by('Post_id')[:5]
     if request.method == "POST":
-        if 'time' in request.POST:
-            thought = Thought.objects.order_by('time')[:5]
         if 'like' in request.POST:
-            thought = Thought.objects.order_by('time')[:5]
+            thought = Post.objects.order_by('Like_times')[:5]
         if 'view' in request.POST:
-            thought = Thought.objects.order_by('time')[:5]
-        if 'pop' in request.POST:
-            thought = Thought.objects.order_by('time')[:5]
-    return render(request, 'index.html', context=thought)
+            thought = Post.objects.order_by('View_times')[:5]
+    return render(request, 'ranbo/index.html', context=thought)
 
 
 def user_login(request):
     if request.method == "POST":
-        username = request.POST.get('username')
+        username = request.POST.get('Username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
         if user:
@@ -44,15 +41,15 @@ def user_login(request):
 
 @login_required
 def add_thought(request):
-    form = ThoughtForm()
+    form = PostForm()
     if request.method == 'POST':
-        form = ThoughtForm(request.POST)
+        form = PostForm(request.POST)
         if form.is_vaild():
             form.save(commit=True)
             return redirect('/ranbo/')
         else:
             print(form.errors)
-    return render(request, 'ranbo/add_thought.html', {'form': form})
+    return render(request, 'ranbo/add_post.html', {'form': form})
 
 
 # def register(request):
@@ -101,51 +98,51 @@ def register(request):
 
 def show_more(request):
     if request.user.is_authenticated():
-        thought = thought.objects.order_by('like_times')
-        return render(request, 'index.html', context=thought)
+        thought = Post.objects.order_by('like_times')
+        return render(request, 'ranbo/index.html', context=thought)
     else:
         return HttpResponse("You need to login")
 
 
-def add_comment(request, thought_id):
-    thought = get_object_or_404(Thought, thought_id=thought_id)
-    if request.method == 'POST':
-        form = commentForm(request.POST)
-        if form.is_vaild():
-            comment = form.save(commit=False)
-            return redirect('ranbo:thought')
-        else:
-            return HttpResponse("fail to add comment")
+# def add_comment(request, post_id):
+#     thought = get_object_or_404(Post, Post_id=post_id)
+#     if request.method == 'POST':
+#         form = commentForm(request.POST)
+#         if form.is_vaild():
+#             comment = form.save(commit=False)
+#             return redirect('ranbo:thought')
+#         else:
+#             return HttpResponse("fail to add comment")
 
 
-def thought_detail(request, thought_id):
+def thought_detail(request, post_id):
     context_dict = {}
-    thought = Thought.objects.get(thought_id=thought_id)
+    thought = Post.objects.get(Post_id=post_id)
     context_dict['like'] = thought.like_times
     context_dict['view'] = thought.view_times
     context_dict['comment'] = thought.comment
-    return render(request, 'ranbo/thought.html')
+    return render(request, 'ranbo/thought_detail.html')
 
 
 def user_info(request, user_id):
     context_dict = {}
-    thought = Thought.objects.get(user_id=user_id)
+    thought = Post.objects.get(user_id=user_id)
     total_like = thought.aggregate(Sum('like_times'))
     total_view = thought.aggregate(Sum('view_times'))
-    user = User.object.get(user_id=user_id)
+    user = User.object.get(User_id=user_id)
     context_dict['username'] = user.usename
     context_dict['total_like'] = total_like
     context_dict['total_view'] = total_view
-    return render(request, 'ranbo/My-account.html')
+    return render(request, 'ranbo/user_profile.html')
 
 
 @login_required
 def like_thought(request):
     if(request.method == 'GET'):
-        thought_id = request.GET['thought_id']
+        thought_id = request.GET['post_id']
         likes = 0
         if thought_id:
-            thought = Thought.objects.get(thought_id=int(thought_id))
+            thought = Post.objects.get(Post_id=int(thought_id))
             if thought:
                 likes = thought.like_times+1
                 thought.like_times = likes
@@ -161,7 +158,7 @@ def user_edit(request):
             user.username = user_form.cleaned_data['username']
             user.password = user_form.cleaned_data['password']
             user.save()
-        return HttpResponseRedirect('/ranbo/My-account/')
+        return HttpResponseRedirect('/ranbo/user_profile/')
 
 
 @login_required
