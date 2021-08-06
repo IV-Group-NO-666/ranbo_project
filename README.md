@@ -23,6 +23,14 @@ python population_script.py
 python manage.py runserver
 ```
 
+## How to test
+
+Follow the next steps to run **tests**:
+
+```bash
+python manage.py test tests_model
+```
+
 ## License
 
 `ranbo-project` is licensed under the terms of the MIT license.
